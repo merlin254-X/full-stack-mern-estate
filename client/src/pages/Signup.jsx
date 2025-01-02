@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Signup() {
-  // State to track form inputs
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+export default function SignUp() {
+  const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Handler for input change
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value // Update the specific field      
+      [e.target.name]: e.target.value,
     });
   };
 
   // Handler for form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    setLoading(true); // Show Loading Indicator
-    
+    e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -33,23 +27,19 @@ export default function Signup() {
         },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-      
-      if (!data.success) {
-        setError(data.message);  // Set error message
-        setLoading(false);        // Stop loading
+      console.log(data);
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.message);
         return;
       }
-      
-      setLoading(false); // Stop loading
-      console.log(data);  // Log response
+      setLoading(false);
+      setError(null);
       navigate('/sign-in');
-    } catch (err) {
-      setError('An error occurred while signing up.');  // Display a general error message
-      
-      setLoading(false); // Stop loading
-      console.error('Error:', err);  // Log error to the console
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
     }
   };
 
@@ -63,8 +53,9 @@ export default function Signup() {
             type="text"
             name="username" // Name attribute for tracking
             placeholder="Username"
-            className="border rounded-md p-2 w-full"            
-            onChange={handleInputChange} // Attach onChange event
+            className="border rounded-md p-2 w-full"
+            value={formData.username}            
+            onChange={handleChange} // Corrected handler name here
           />
         </div>
         <div className="mb-4">
@@ -72,8 +63,9 @@ export default function Signup() {
             type="email"
             name="email" // Name attribute for tracking
             placeholder="Email"
-            className="border rounded-md p-2 w-full"            
-            onChange={handleInputChange} // Attach onChange event
+            className="border rounded-md p-2 w-full"
+            value={formData.email}
+            onChange={handleChange} // Corrected handler name here
           />
         </div>
         <div className="mb-4">
@@ -81,12 +73,13 @@ export default function Signup() {
             type="password"
             name="password" // Name attribute for tracking
             placeholder="Password"
-            className="border rounded-md p-2 w-full"            
-            onChange={handleInputChange} // Attach onChange event
+            className="border rounded-md p-2 w-full"
+            value={formData.password}
+            onChange={handleChange} // Corrected handler name here
           />
         </div>
-        <button type="submit" disabled={Loading} className="bg-blue-500 text-white p-2 rounded-md w-full">
-          {Loading ? 'Loading...' : 'Sign Up'}
+        <button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded-md w-full">
+          {loading ? 'Loading...' : 'Sign Up'}
         </button>
       </form>
       <div className="flex gap-2 mt-5">
