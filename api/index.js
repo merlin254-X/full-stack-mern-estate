@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import listingRouter from './routes/listing.route.js';
 import cors from 'cors';
 import { v2 as cloudinary } from 'cloudinary';
 import cookieParser from 'cookie-parser';
@@ -35,6 +36,8 @@ cloudinary.config({
 // Define Routes
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/listing', listingRouter);
+
 
 // Cloudinary Upload Endpoint
 app.post('/api/upload', async (req, res) => {
