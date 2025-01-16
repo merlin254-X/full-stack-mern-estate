@@ -69,7 +69,7 @@ export default function SignIn() {
           />
         </div>
         <button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded-md w-full">
-          {loading ? 'Loading...' : 'Sign In'}s
+          {loading ? 'Loading...' : 'Sign In'}
         </button>
         <OAuth />
       </form>
