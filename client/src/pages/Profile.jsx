@@ -139,7 +139,7 @@ export default function Profile() {
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(deleteUserFailure(error.message || "An error occurred."));
     }
   };
 
@@ -161,6 +161,24 @@ export default function Profile() {
     }
   }
 
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        console.error(data.message || "Failed to delete listing.");
+        return;
+      }
+
+      setUserListings((previousListings) =>
+        previousListings.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
