@@ -65,8 +65,12 @@ export const deleteUser = async (req, res, next) => {
         return next(errorHandler(401, 'You can only view your own listings!'));
     }
   };
+<<<<<<< HEAD
 
 export const getUser = async (req, res, next) => {
+=======
+  export const getUser = async (req, res, next) => {
+>>>>>>> d3b19261058b1bc3041f9c72c613ef37d2b85878
     try {
         const user = await User.findById(req.params.id);
         if (!user) {
@@ -77,4 +81,8 @@ export const getUser = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> d3b19261058b1bc3041f9c72c613ef37d2b85878
