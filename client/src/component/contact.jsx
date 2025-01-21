@@ -5,10 +5,14 @@ export default function Contact({ listing }) {
     const [landlord, setLandlord] = useState(null);
     const [message, setMessage] = useState('');
 
+    const onChange = (e) => {
+        setMessage(e.target.value);
+      };
+
     useEffect(() => {
         const fetchLandlord = async () => {
             try {
-                const response = await fetch(/api/user/${listing.userRef});
+                const response = await fetch(`/api/user/${listing.userRef}`);
                 const data = await response.json();
                 setLandlord(data);
             } catch (error) {
@@ -18,10 +22,7 @@ export default function Contact({ listing }) {
 
         fetchLandlord();
     }, [listing.userRef]);
-
-    const handleMessageChange = (event) => {
-        setMessage(event.target.value);
-    };
+    
 
     return (
         <>
@@ -41,7 +42,7 @@ export default function Contact({ listing }) {
                         className="w-full border p-3 rounded-lg"
                     ></textarea>
                     <Link
-                        to={mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}}
+                        to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
                         className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
                     >
                         Send Message

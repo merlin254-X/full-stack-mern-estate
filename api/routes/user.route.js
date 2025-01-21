@@ -1,7 +1,6 @@
 import express from 'express';
 import { deleteUser, test, updateUser, getUserListings, getUser } from '../controllers/user.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
-router.get('/:id', verifyToken, getUser);
 
 export const router = express.Router();
 
