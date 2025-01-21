@@ -42,7 +42,6 @@ export default function SignIn() {
       dispatch(signInFailure(error.message));      
     }
   };
-
   return (
     <div className="p-6 max-w-lg mx-auto mt-10 bg-white shadow-md rounded-md">
       <h1 className="text-3xl text-center font-semibold">Sign In</h1>
