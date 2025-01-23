@@ -51,7 +51,7 @@ export default function Header() {
         {/* Navigation Links */}
         <ul className="flex gap-4 items-center">
           <li>
-            <Link to="/home" className="text-slate-700 hover:underline">
+            <Link to="/" className="text-slate-700 hover:underline">
               Home
             </Link>
           </li>
