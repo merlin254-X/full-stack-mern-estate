@@ -7,6 +7,7 @@ import listingRouter from './routes/listing.route.js';
 import cors from 'cors';
 import { v2 as cloudinary } from 'cloudinary';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
+  const __dirname = path.resolve();
+
 // Cloudinary Configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -37,6 +40,12 @@ cloudinary.config({
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 
 // Cloudinary Upload Endpoint
