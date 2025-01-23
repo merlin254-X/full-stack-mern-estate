@@ -6,7 +6,7 @@ import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Header from './component/Header';
 import PrivateRoute from './component/privateRoute';
-import CreateListing from './pages/createListing';
+import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
