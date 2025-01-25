@@ -59,7 +59,7 @@ export default function Profile() {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "dziyp8dr8"); // Replace with your Cloudinary unsigned preset name
+    formData.append("upload_preset", "d2mlr36v"); // Replace with your Cloudinary unsigned preset name
 
     try {
       const res = await fetch("https://api.cloudinary.com/v1_1/dziyp8dr8/image/upload", {

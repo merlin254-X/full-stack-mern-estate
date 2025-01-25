@@ -82,7 +82,9 @@ export default function SignUp() {
         <button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded-md w-full">
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
+        <div className="mt-4"> {/* Add margin-top to separate the buttons */}
         <OAuth />
+        </div>        
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
@@ -93,3 +95,5 @@ export default function SignUp() {
     </div>
   );
 }
+  
+

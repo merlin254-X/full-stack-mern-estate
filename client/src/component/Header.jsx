@@ -27,8 +27,8 @@ export default function Header() {
         {/* Logo */}
         <Link to="/">
           <h1 className="font-bold text-sn sm:text-xl flex flex-wrap">
-            <span className="text-slate-400">RealDM</span>
-            <span className="text-slate-600">R-estate</span>
+            <span className="text-slate-400">LuxeLiving</span>
+            <span className="text-slate-600">-Estates</span>
           </h1>
         </Link>
 

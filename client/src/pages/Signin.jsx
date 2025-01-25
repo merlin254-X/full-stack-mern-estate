@@ -70,7 +70,9 @@ export default function SignIn() {
         <button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded-md w-full">
           {loading ? 'Loading...' : 'Sign In'}
         </button>
+        <div className="mt-4"> {/* Add margin-top to separate the buttons */}
         <OAuth />
+        </div>        
       </form>
       <div className="flex gap-2 mt-5">
         <p>Don't have an account?</p>
