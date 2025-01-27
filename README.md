@@ -1,6 +1,6 @@
-# TaskMaster Pro
+# Full-Stack-MERN-Real-Estate
 
-TaskMaster Pro is a full-stack web application designed to help users manage tasks effectively. It enables users to create, update, and delete tasks, along with real-time collaboration features. Built using the MERN stack, it ensures a modern, dynamic, and responsive user experience.
+ is a full-stack web application designed to help users manage tasks effectively. It enables users to create, update, and delete tasks, along with real-time collaboration features. Built using the MERN stack, it ensures a modern, dynamic, and responsive user experience.
 
 ## Technologies Used
 
@@ -61,4 +61,4 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Deployed URL
 
-Visit the live application: [TaskMaster Pro](https://full-stack-mern-estate1.onrender.com)
+Visit the live application: [LuxeLiving-Estate](https://full-stack-mern-estate1.onrender.com)
