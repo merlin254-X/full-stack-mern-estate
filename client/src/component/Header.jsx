@@ -1,10 +1,7 @@
 /**
  * Header.jsx  –  East Bridge Real Estates
  * ─────────────────────────────────
- * Deps (add to package.json if missing):
- *   framer-motion, lucide-react
- * Fonts (add to index.html <head>):
- *   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+ * Updated to support light background in the Home hero section.
  */
 
 import { useEffect, useState, useRef } from 'react';
@@ -69,13 +66,27 @@ export default function Header() {
     setSearchOpen(false);
   };
 
-  /* ─── styles ─────────────────────────────────────────────── */
+  /* ─── style logic ─────────────────────────────────────────── */
+  const isHomePage = location.pathname === '/';
+  
   const headerBase = `
     fixed top-0 inset-x-0 z-50 transition-all duration-500
     ${scrolled
-      ? 'bg-[#0c1117]/95 backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.06)] py-3'
+      ? 'bg-[#0c1117]/95 backdrop-blur-xl shadow-lg py-3'
       : 'bg-transparent py-5'}
   `;
+
+  const textColor = scrolled 
+    ? 'text-white' 
+    : (isHomePage ? 'text-gray-900' : 'text-white');
+
+  const subTextColor = scrolled 
+    ? 'text-white/50' 
+    : (isHomePage ? 'text-gray-500' : 'text-white/50');
+
+  const iconColor = scrolled 
+    ? 'text-white/60' 
+    : (isHomePage ? 'text-gray-700' : 'text-white/60');
 
   return (
     <>
@@ -89,11 +100,11 @@ export default function Header() {
                 className="text-xl font-semibold tracking-tight"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                <span className="text-white/90">East-</span>
-                <span className="text-amber-400">Gates</span>
+                <span className={scrolled ? 'text-white/90' : (isHomePage ? 'text-gray-900' : 'text-white/90')}>East-</span>
+                <span className="text-amber-500">Gates</span>
               </span>
-              <span className="text-white/30 mx-1 text-lg font-light">·</span>
-              <span className="text-white/50 text-sm font-light tracking-widest uppercase">Estates</span>
+              <span className={`${subTextColor} mx-1 text-lg font-light`}>·</span>
+              <span className={`${subTextColor} text-sm font-light tracking-widest uppercase`}>Estates</span>
             </motion.div>
           </Link>
 
@@ -107,14 +118,14 @@ export default function Header() {
                     whileHover={{ y: -1 }}
                     className={`
                       relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200
-                      ${active ? 'text-white' : 'text-white/50 hover:text-white/90'}
+                      ${active ? (scrolled ? 'text-white' : (isHomePage ? 'text-gray-900' : 'text-white')) : (scrolled ? 'text-white/50 hover:text-white/90' : (isHomePage ? 'text-gray-500 hover:text-gray-900' : 'text-white/50 hover:text-white/90'))}
                     `}
                   >
                     {label}
                     {active && (
                       <motion.div
                         layoutId="nav-pill"
-                        className="absolute inset-0 bg-white/8 rounded-lg -z-10"
+                        className={`absolute inset-0 ${scrolled ? 'bg-white/10' : (isHomePage ? 'bg-gray-900/5' : 'bg-white/10')} rounded-lg -z-10`}
                         transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
                       />
                     )}
@@ -131,7 +142,7 @@ export default function Header() {
             <motion.button
               whileTap={{ scale: 0.93 }}
               onClick={() => setSearchOpen((v) => !v)}
-              className="p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+              className={`p-2 rounded-full ${iconColor} hover:bg-white/10 transition-colors`}
               aria-label="Toggle search"
             >
               <Search size={18} strokeWidth={1.8} />
@@ -144,7 +155,7 @@ export default function Header() {
                   <img
                     src={currentUser.avatar}
                     alt="profile"
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-amber-400/40 ring-offset-2 ring-offset-transparent"
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-amber-500 ring-offset-2 ring-offset-transparent"
                   />
                 </motion.div>
               </Link>
@@ -153,7 +164,7 @@ export default function Header() {
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="hidden md:flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-900 text-sm font-semibold px-4 py-2 rounded-full transition-colors duration-200"
+                  className="hidden md:flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-gray-900 text-sm font-semibold px-4 py-2 rounded-full transition-colors duration-200 shadow-md shadow-amber-500/10"
                 >
                   <User size={14} />
                   Sign In
@@ -164,7 +175,7 @@ export default function Header() {
             {/* Mobile hamburger */}
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="md:hidden p-2 text-white/60 hover:text-white"
+              className={`md:hidden p-2 ${iconColor}`}
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Menu"
             >
@@ -187,32 +198,22 @@ export default function Header() {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.25, ease: 'easeInOut' }}
-              className="overflow-hidden border-t border-white/8"
+              className={`overflow-hidden border-t ${scrolled ? 'border-white/8' : (isHomePage ? 'border-gray-200' : 'border-white/8')}`}
             >
               <form onSubmit={handleSubmit} className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-3">
-                <Search size={16} className="text-white/40 flex-shrink-0" />
+                <Search size={16} className={`${subTextColor} flex-shrink-0`} />
                 <input
                   ref={inputRef}
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by location, property type…"
-                  className="flex-1 bg-transparent text-white/90 placeholder-white/30 text-sm focus:outline-none"
+                  className={`flex-1 bg-transparent ${textColor} placeholder:opacity-40 text-sm focus:outline-none`}
                 />
-                {searchTerm && (
-                  <motion.button
-                    initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    type="button"
-                    onClick={() => setSearchTerm('')}
-                    className="text-white/40 hover:text-white/70 transition-colors"
-                  >
-                    <X size={14} />
-                  </motion.button>
-                )}
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   type="submit"
-                  className="bg-amber-400 text-gray-900 text-xs font-bold px-4 py-1.5 rounded-full hover:bg-amber-300 transition-colors flex items-center gap-1"
+                  className="bg-amber-500 text-gray-900 text-xs font-bold px-4 py-1.5 rounded-full hover:bg-amber-400 transition-colors flex items-center gap-1"
                 >
                   Search <ChevronRight size={13} />
                 </motion.button>
@@ -222,7 +223,7 @@ export default function Header() {
         </AnimatePresence>
       </header>
 
-      {/* ── Mobile Drawer ──────────────────────────────────────── */}
+      {/* ── Mobile Drawer (Always Dark Mode) ──────────────────── */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -252,7 +253,7 @@ export default function Header() {
                     className="flex items-center justify-between py-3 text-white/80 hover:text-white text-lg font-medium border-b border-white/6 group"
                   >
                     {label}
-                    <ChevronRight size={16} className="text-white/20 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+                    <ChevronRight size={16} className="text-white/20 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
                   </Link>
                 </motion.div>
               ))}
@@ -260,7 +261,7 @@ export default function Header() {
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="mt-auto">
                   <Link
                     to="/sign-in"
-                    className="flex items-center justify-center gap-2 bg-amber-400 text-gray-900 font-semibold py-3 rounded-xl hover:bg-amber-300 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-amber-500 text-gray-900 font-semibold py-3 rounded-xl hover:bg-amber-400 transition-colors"
                   >
                     <User size={16} /> Sign In
                   </Link>
