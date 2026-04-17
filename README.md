@@ -61,4 +61,4 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Deployed URL
 
-Visit the live application: [LuxeLiving-Estate](https://full-stack-mern-estate1.onrender.com)
+Visit the live application: [East Bridge Real-Estate](https://full-stack-mern-estate1.onrender.com)
