@@ -1,3 +1,6 @@
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -14,7 +17,6 @@ dotenv.config();
 const app = express();
 
 app.use(cookieParser());
-
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
@@ -23,11 +25,11 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 const mongoUri = process.env.MONGO;
 console.log(`Connecting to MongoDB at: ${mongoUri}`);
 mongoose
-  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoUri)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-  const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 // Cloudinary Configuration
 cloudinary.config({
@@ -45,8 +47,7 @@ app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
-
+});
 
 // Cloudinary Upload Endpoint
 app.post('/api/upload', async (req, res) => {
@@ -74,7 +75,6 @@ app.post('/api/upload', async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 });
-
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

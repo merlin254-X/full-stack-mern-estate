@@ -1,5 +1,5 @@
 /**
- * Contact.jsx  –  East Bridge Real Estates
+ * Contact.jsx  –  East Bridge Developers
  * ─────────────────────────────────────
  * Deps: framer-motion, lucide-react
  * Fonts (index.html):

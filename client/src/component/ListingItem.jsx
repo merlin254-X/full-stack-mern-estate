@@ -1,5 +1,5 @@
 /**
- * ListingItem.jsx  –  East Bridge Real Estates
+ * ListingItem.jsx  –  East Bridge Developers
  * ─────────────────────────────────────────
  * Deps: framer-motion, lucide-react
  * Fonts (index.html):
