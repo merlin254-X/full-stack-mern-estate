@@ -117,9 +117,8 @@ export default function Home() {
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 flex flex-col justify-center">
           <motion.div initial="hidden" animate="show" className="max-w-3xl">
             <motion.div variants={stagger(0.1)} className="flex items-center gap-2 mb-6">
-              <Sparkles size={16} className="text-amber-400" />
               <span className="text-amber-400 text-xs font-bold tracking-[0.2em] uppercase">
-                East Bridge Developers
+                Welcome to East Bridge Developers :)
               </span>
             </motion.div>
 
@@ -137,8 +136,8 @@ export default function Home() {
               variants={stagger(0.3)}
               className="text-white/80 text-lg sm:text-xl max-w-xl mb-10 leading-relaxed"
             >
-              Curated properties across East Africa. Transparent pricing.
-              A seamless journey from search to keys in hand.
+              Get yourself a home in the place where you want to live. We have Properties across East Africa. Transparent pricing.
+              A seamlesss journey from search to keys in hand.
             </motion.p>
 
             <motion.div variants={stagger(0.4)} className="flex flex-wrap items-center gap-4">
