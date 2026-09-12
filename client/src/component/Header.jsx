@@ -1,13 +1,8 @@
-/**
- * Header.jsx  –  East Bridge Developers
- * Extra modern version
- */
-
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Search, X, User, Menu, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, Menu, ChevronRight } from 'lucide-react';
 
 function useClickOutside(ref, handler) {
   useEffect(() => {
@@ -37,7 +32,6 @@ export default function Header() {
 
   const searchRef = useRef(null);
   const inputRef = useRef(null);
-  const { scrollY } = useScroll();
 
   useEffect(() => setMobileOpen(false), [location]);
 
@@ -46,7 +40,12 @@ export default function Header() {
     if (term) setSearchTerm(term);
   }, [location]);
 
-  useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 16));
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     if (searchOpen) setTimeout(() => inputRef.current?.focus(), 120);
@@ -61,158 +60,90 @@ export default function Header() {
     setSearchOpen(false);
   };
 
-  const isHomePage = location.pathname === '/';
-
-  // Dynamic colors
-  const isDark = scrolled || !isHomePage;
-
   return (
     <>
       <header
-        className={`
-          fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out
-          ${scrolled
-            ? 'bg-[#0b0f14]/80 backdrop-blur-2xl border-b border-white/[0.06] py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
-            : 'bg-transparent py-5'}
-        `}
-        style={{ fontFamily: "'DM Sans', sans-serif" }}
+        className={`fixed top-0 inset-x-0 z-50 bg-white transition-shadow duration-300 ${
+          scrolled ? 'shadow-sm border-b border-black/5 py-3' : 'py-5'
+        }`}
+        style={{ fontFamily: "'Inter', 'DM Sans', sans-serif" }}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
-
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0 group">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              className="flex items-baseline gap-1.5"
-            >
+          <Link to="/" className="flex-shrink-0">
+            <div className="flex items-baseline gap-1.5">
               <span
-                className="text-[1.35rem] font-semibold tracking-tight"
+                className="text-[1.35rem] font-semibold tracking-tight text-[#111111]"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                <span className={isDark ? 'text-white' : 'text-gray-900'}>
-                  East-
-                </span>
-                <span className="text-amber-400">Gates</span>
+                East-<span style={{ color: '#C9A227' }}>Gates</span>
               </span>
-              <span className={`text-[11px] font-medium tracking-[0.22em] uppercase ${isDark ? 'text-white/40' : 'text-gray-400'}`}>
+              <span className="hidden sm:inline text-[11px] font-medium tracking-[0.22em] uppercase text-black/35">
                 Developers
               </span>
-            </motion.div>
+            </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-0.5 bg-white/[0.03] rounded-full px-1.5 py-1 border border-white/[0.04]">
+          <nav className="hidden md:flex items-center gap-1 bg-[#F3F4F6] rounded-full px-1.5 py-1">
             {NAV_LINKS.map(({ label, to }) => {
               const active = location.pathname === to;
               return (
                 <Link key={to} to={to}>
-                  <motion.div
-                    whileHover={{ y: -1 }}
-                    className={`
-                      relative px-5 py-2 text-[13px] font-medium rounded-full transition-colors duration-200
-                      ${active
-                        ? isDark ? 'text-white' : 'text-gray-900'
-                        : isDark ? 'text-white/45 hover:text-white/85' : 'text-gray-500 hover:text-gray-900'}
-                    `}
+                  <span
+                    className={`relative block px-5 py-2 text-[13px] font-medium rounded-full ${
+                      active ? 'text-[#111111] bg-white shadow-sm' : 'text-black/45 hover:text-[#111111]'
+                    }`}
                   >
                     {label}
-                    {active && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className={`absolute inset-0 rounded-full -z-10 ${
-                          isDark ? 'bg-white/10' : 'bg-gray-900/8'
-                        }`}
-                        transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                      />
-                    )}
-                  </motion.div>
+                  </span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right side */}
-          <div className="flex items-center gap-2.5">
-
-            {/* Search */}
-            <motion.button
-              whileTap={{ scale: 0.92 }}
+          <div className="flex items-center gap-2">
+            <button
               onClick={() => setSearchOpen((v) => !v)}
-              className={`
-                p-2.5 rounded-full transition-all duration-200
-                ${isDark
-                  ? 'text-white/55 hover:text-white hover:bg-white/10'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-900/5'}
-              `}
+              className="p-2.5 rounded-full text-black/50 hover:text-[#111111] hover:bg-black/5"
               aria-label="Search"
             >
               <Search size={17} strokeWidth={1.9} />
-            </motion.button>
+            </button>
 
-            {/* Avatar / Sign In */}
             {currentUser ? (
               <Link to="/profile">
-                <motion.div
-                  whileHover={{ scale: 1.06 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="relative"
-                >
-                  <img
-                    src={currentUser.avatar}
-                    alt="profile"
-                    className="h-9 w-9 rounded-full object-cover ring-2 ring-amber-400/80 ring-offset-2 ring-offset-transparent"
-                  />
-                </motion.div>
+                <img
+                  src={currentUser.avatar}
+                  alt="profile"
+                  className="h-9 w-9 rounded-full object-cover ring-2 ring-[#C9A227]/80"
+                />
               </Link>
             ) : (
-              <Link to="/sign-in" className="hidden md:block">
-                <motion.div
-                  whileHover={{ scale: 1.03, y: -1 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-gray-900 text-[13px] font-semibold px-5 py-2.5 rounded-full transition-all duration-200 shadow-[0_4px_20px_rgba(251,191,36,0.25)]"
+              <div className="hidden md:flex items-center gap-2">
+                <Link
+                  to="/sign-in"
+                  className="px-5 py-2 text-[13px] font-medium rounded-full border border-black/10 text-[#111111] hover:bg-black/5"
                 >
-                  <User size={14} strokeWidth={2.2} />
-                  Sign In
-                </motion.div>
-              </Link>
+                  Login
+                </Link>
+                <Link
+                  to="/sign-up"
+                  className="px-5 py-2.5 text-[13px] font-semibold rounded-full bg-[#111111] text-white hover:bg-black"
+                >
+                  Join Now
+                </Link>
+              </div>
             )}
 
-            {/* Mobile menu */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className={`md:hidden p-2.5 rounded-full ${isDark ? 'text-white/70' : 'text-gray-700'}`}
+            <button
+              className="md:hidden p-2.5 rounded-full text-[#111111]"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Menu"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {mobileOpen ? (
-                  <motion.div
-                    key="x"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <X size={20} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="ham"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Menu size={20} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
         </div>
 
-        {/* Expandable Search */}
         <AnimatePresence>
           {searchOpen && (
             <motion.div
@@ -220,45 +151,27 @@ export default function Header() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className={`overflow-hidden border-t ${
-                isDark ? 'border-white/[0.06]' : 'border-gray-200/80'
-              }`}
+              className="overflow-hidden border-t border-black/5 bg-white"
             >
-              <form
-                onSubmit={handleSubmit}
-                className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center gap-3"
-              >
-                <Search
-                  size={16}
-                  className={`flex-shrink-0 ${isDark ? 'text-white/35' : 'text-gray-400'}`}
-                />
+              <form onSubmit={handleSubmit} className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center gap-3">
+                <Search size={16} className="text-black/30" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search location, property type, or keyword…"
-                  className={`
-                    flex-1 bg-transparent text-sm focus:outline-none placeholder:opacity-40
-                    ${isDark ? 'text-white' : 'text-gray-900'}
-                  `}
+                  placeholder="Search Kigali, Nairobi, property type…"
+                  className="flex-1 bg-transparent text-sm text-[#111111] focus:outline-none placeholder:text-black/30"
                 />
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  type="submit"
-                  className="flex items-center gap-1 bg-amber-400 text-gray-900 text-xs font-bold px-4 py-2 rounded-full hover:bg-amber-300 transition-colors"
-                >
+                <button type="submit" className="bg-[#111111] text-white text-xs font-bold px-4 py-2 rounded-full">
                   Search
-                  <ChevronRight size={13} strokeWidth={2.5} />
-                </motion.button>
+                </button>
               </form>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
 
-      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -266,62 +179,36 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-black/40 z-40 md:hidden"
               onClick={() => setMobileOpen(false)}
             />
-
             <motion.nav
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 32, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 w-[300px] z-50 bg-[#0b0f14] border-l border-white/[0.06] flex flex-col p-8"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              className="fixed top-0 right-0 bottom-0 w-[300px] z-50 bg-white flex flex-col p-8"
             >
-              <div className="mb-10">
-                <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/25">
-                  Menu
-                </span>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                {NAV_LINKS.map(({ label, to }, i) => (
-                  <motion.div
-                    key={to}
-                    initial={{ x: 24, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.05 + 0.08, duration: 0.35 }}
-                  >
-                    <Link
-                      to={to}
-                      className="group flex items-center justify-between py-4 text-[17px] font-medium text-white/75 hover:text-white border-b border-white/[0.05] transition-colors"
-                    >
-                      {label}
-                      <ChevronRight
-                        size={16}
-                        className="text-white/20 group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-200"
-                      />
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-
-              {!currentUser && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.28 }}
-                  className="mt-auto"
+              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-black/30 mb-8">Menu</p>
+              {NAV_LINKS.map(({ label, to }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="flex items-center justify-between py-4 text-[17px] font-medium text-[#111111] border-b border-black/5"
                 >
-                  <Link
-                    to="/sign-in"
-                    className="flex items-center justify-center gap-2.5 w-full bg-amber-400 text-gray-900 font-semibold py-3.5 rounded-2xl hover:bg-amber-300 transition-colors shadow-[0_8px_24px_rgba(251,191,36,0.2)]"
-                  >
-                    <User size={16} strokeWidth={2.2} />
-                    Sign In
+                  {label}
+                  <ChevronRight size={16} className="text-black/25" />
+                </Link>
+              ))}
+              {!currentUser && (
+                <div className="mt-auto flex flex-col gap-3">
+                  <Link to="/sign-in" className="text-center py-3 rounded-2xl border border-black/10 font-semibold">
+                    Login
                   </Link>
-                </motion.div>
+                  <Link to="/sign-up" className="text-center py-3 rounded-2xl bg-[#111111] text-white font-semibold">
+                    Join Now
+                  </Link>
+                </div>
               )}
             </motion.nav>
           </>
