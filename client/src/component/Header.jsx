@@ -68,19 +68,13 @@ export default function Header() {
         }`}
         style={{ fontFamily: "'Inter', 'DM Sans', sans-serif" }}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
-          <Link to="/" className="flex-shrink-0">
-            <div className="flex items-baseline gap-1.5">
-              <span
-                className="text-[1.35rem] font-semibold tracking-tight text-[#111111]"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                East-<span style={{ color: '#C9A227' }}>Gates</span>
-              </span>
-              <span className="hidden sm:inline text-[11px] font-medium tracking-[0.22em] uppercase text-black/35">
-                Developers
-              </span>
-            </div>
+        <div className="w-full pl-4 sm:pl-6 pr-5 sm:pr-8 flex items-center justify-between gap-4">
+          <Link to="/" className="flex-shrink-0 mr-auto">
+            <img
+              src="/logo/logo.png"
+              alt="East Gates Developers"
+              className="h-10 w-auto object-contain object-left"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 bg-[#F3F4F6] rounded-full px-1.5 py-1">

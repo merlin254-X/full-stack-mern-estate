@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Search, ShieldCheck, MapPin } from 'lucide-react';
 import ListingItem from '../component/ListingItem';
 
-const headingFont = "'Playfair Display', Georgia, 'Times New Roman', serif";
+const headingFont = "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif";
 const bodyFont = "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif";
 
 const fadeUp = {
@@ -29,7 +29,7 @@ function SectionHeading({ eyebrow, title, link, linkTo }) {
         <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#C9A227' }}>
           {eyebrow}
         </p>
-        <h2 className="text-3xl sm:text-4xl font-semibold text-[#111111]" style={{ fontFamily: headingFont }}>
+        <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-[#111111]" style={{ fontFamily: headingFont }}>
           {title}
         </h2>
       </div>
@@ -71,14 +71,12 @@ export default function Home() {
     fetchAll();
   }, []);
 
-  const liveCount = offerListings.length + rentListings.length + saleListings.length;
-
   return (
     <div className="bg-white min-h-screen" style={{ fontFamily: bodyFont }}>
       <section className="min-h-[100dvh] flex flex-col">
         <div className="pt-24 sm:pt-28 pb-4 sm:pb-5 max-w-5xl mx-auto px-5 text-center shrink-0">
           <h1
-            className="text-3xl sm:text-5xl lg:text-[52px] font-semibold text-[#111111] leading-[1.15]"
+            className="text-3xl sm:text-5xl lg:text-[52px] font-medium tracking-tight text-[#111111] leading-[1.15]"
             style={{ fontFamily: headingFont }}
           >
             Find land and homes across East Africa
@@ -90,12 +88,13 @@ export default function Home() {
 
         <div className="relative w-full flex-1 min-h-[320px]">
           <img
-            src="/old-buildings-port-evening.jpg"
+            src="/hero.jpg"
             alt="East Gates featured property"
             className="absolute inset-0 w-full h-full object-cover object-[center_65%]"
           />
           <div className="absolute inset-x-0 top-0 h-28 sm:h-40 bg-gradient-to-b from-white via-white/75 to-transparent pointer-events-none" />
           <div className="absolute inset-x-0 bottom-0 h-40 sm:h-52 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black to-transparent pointer-events-none" />
 
           <div className="absolute inset-0 flex items-center justify-center gap-3 px-4">
             <Link to="/search" className="px-5 py-2.5 rounded-full bg-white text-[#111111] text-sm font-medium shadow-sm">
@@ -111,13 +110,13 @@ export default function Home() {
 
           <div className="absolute bottom-0 inset-x-0 max-w-6xl mx-auto px-6 sm:px-10 pb-5 sm:pb-8 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-white">
             {[
-              { n: liveCount > 0 ? `${liveCount}+` : 'Live', l: 'Listings shown' },
-              { n: 'Kigali', l: 'Nairobi next' },
-              { n: 'Sale + Rent', l: 'One platform' },
-              { n: '2023', l: 'Started together' },
+              { n: 'RW · KE', l: 'Core markets' },
+              { n: 'Sale · Rent', l: 'Land and homes' },
+              { n: 'Turnkey', l: 'Engineering on site' },
+              { n: 'Est. 2023', l: 'Locally founded' },
             ].map((s) => (
               <div key={s.l}>
-                <p className="text-xl sm:text-3xl font-semibold" style={{ fontFamily: headingFont }}>
+                <p className="text-xl sm:text-2xl font-medium tracking-tight" style={{ fontFamily: headingFont }}>
                   {s.n}
                 </p>
                 <p className="text-[11px] sm:text-sm text-white/70 mt-1">{s.l}</p>
@@ -133,7 +132,7 @@ export default function Home() {
             <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: '#C9A227' }}>
               Reason to choose us
             </p>
-            <h2 className="text-3xl sm:text-5xl font-semibold text-[#111111] leading-tight mb-6" style={{ fontFamily: headingFont }}>
+            <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#111111] leading-tight mb-6" style={{ fontFamily: headingFont }}>
               Discover the value behind smart property choices
             </h2>
             <p className="text-black/50 leading-relaxed mb-8 max-w-md">
@@ -167,7 +166,7 @@ export default function Home() {
                 <h3 className="font-semibold text-[#111111] mb-2">Start where it matters</h3>
                 <p className="text-sm text-black/50">Kenya and Rwanda first. Land, apartments, and renovation services in one flow.</p>
               </div>
-              <img src="/old-buildings-port-evening.jpg" alt="" className="w-full sm:w-40 h-28 object-cover object-[center_65%]" />
+              <img src="/hero.jpg" alt="" className="w-full sm:w-40 h-28 object-cover object-[center_65%]" />
             </div>
           </motion.div>
         </section>
@@ -211,7 +210,7 @@ export default function Home() {
           <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: '#C9A227' }}>
             Ready to start?
           </p>
-          <h2 className="text-3xl sm:text-5xl font-semibold text-white mb-8 max-w-2xl mx-auto" style={{ fontFamily: headingFont }}>
+          <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-white mb-8 max-w-2xl mx-auto" style={{ fontFamily: headingFont }}>
             Your perfect home is one search away.
           </h2>
           <Link to="/search" className="inline-flex items-center gap-2 bg-[#C9A227] text-[#111111] font-semibold px-10 py-4 rounded-full text-sm">
