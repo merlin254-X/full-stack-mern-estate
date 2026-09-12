@@ -68,8 +68,8 @@ export default function Header() {
         }`}
         style={{ fontFamily: "'Inter', 'DM Sans', sans-serif" }}
       >
-        <div className="w-full pl-4 sm:pl-6 pr-5 sm:pr-8 flex items-center justify-between gap-4">
-          <Link to="/" className="flex-shrink-0 mr-auto">
+        <div className="w-full px-4 sm:px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <Link to="/" className="justify-self-start flex-shrink-0">
             <img
               src="/logo/logo.png"
               alt="East Gates Developers"
@@ -77,7 +77,7 @@ export default function Header() {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1 bg-[#F3F4F6] rounded-full px-1.5 py-1">
+          <nav className="hidden md:flex items-center justify-center gap-1 bg-[#F3F4F6] rounded-full px-1.5 py-1">
             {NAV_LINKS.map(({ label, to }) => {
               const active = location.pathname === to;
               return (
@@ -94,7 +94,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="justify-self-end flex items-center gap-2">
             <button
               onClick={() => setSearchOpen((v) => !v)}
               className="p-2.5 rounded-full text-black/50 hover:text-[#111111] hover:bg-black/5"
