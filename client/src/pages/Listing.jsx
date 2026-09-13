@@ -138,7 +138,7 @@ export default function Listing() {
               <div>
                 <button
                   onClick={() => setContact(true)}
-                  className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>Contact landlord
+                  className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>Contact us
                 </button>
               </div>
             )}
